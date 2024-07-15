@@ -6,10 +6,6 @@ import { NextAuthOptions, User } from "next-auth";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
-console.log({
-  clientId: process.env.GOOGLE_CLIENT_ID as string,
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-});
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -35,23 +31,26 @@ export const authOptions: NextAuthOptions = {
 
     async signIn({ profile }: { profile: any }) {
       try {
-        //serverless -> Lambda
         await dbConnect();
-        // check if a user already exist or
-        const userFromDB = userModel.findOne({
-          email: profile?.email,
-        });
+        const userExists = await userModel.findOne({ email: profile?.email });
 
-        //if do not exist add in the data
-        if (!userFromDB) {
+        if (!userExists) {
+          const username = profile.name
+            .replace(/\s+/g, "") // Remove spaces
+            .replace(/[^a-zA-Z0-9._]/g, "") // Remove characters that aren't letters, numbers, dots, or underscores
+            .toLowerCase()
+            .slice(0, 20); // Limit to 20 characters
+
           await userModel.create({
             email: profile?.email,
-            username: profile.name.replace(/[^a-zA-Z0-9]/g, "").toLowerCase(),
+            username: username,
             image: profile?.picture,
           });
         }
+        return true;
       } catch (error) {
-        console.log(`Error exist in signIn`, error);
+        console.log(`Error in signIn`, error);
+        return false;
       }
     },
   },

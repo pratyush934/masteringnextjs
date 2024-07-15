@@ -17,19 +17,11 @@ export const userSchema: Schema<User> = new Schema({
     type: String,
     required: [true, "Username is required"],
     match: [
-      /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
-      "Username is invalid, it should contain 8-20 alphanumeric characters and be unique!",
+      /^[a-zA-Z0-9._]{4,20}$/,
+      "Username should be 4-20 characters long and can contain letters, numbers, dots, and underscores.",
     ],
   },
 
-  // username: {
-  //   type: String,
-  //   required: [true, "UserName is required"],
-  //   // match: [
-  //   //   /^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/,
-  //   //   "Username invalid, it should contain 8-20 alphanumeric letters and be unique!",
-  //   // ],
-  // },
   image: {
     type: String,
   },
