@@ -1,8 +1,9 @@
 import React from 'react'
+import PromptCard from './PromptCard'
 
 const Feed = () => {
   return (
-    <div>Feed</div>
+    <div>Good </div>
   )
 }
 

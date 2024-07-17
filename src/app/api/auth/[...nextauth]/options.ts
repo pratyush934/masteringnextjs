@@ -27,6 +27,7 @@ export const authOptions: NextAuthOptions = {
         email: session?.user.email,
       });
       session.user.id = sessionUser?._id.toString();
+      // console.log(session.user);
       return session;
     },
 

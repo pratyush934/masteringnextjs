@@ -26,14 +26,14 @@ const Nav = () => {
   const [providers, setProviders] = useState<any | null>(null);
   const [toggleDropDown, setToggleDropDown] = useState<boolean>(false);
 
-  // console.log(providers);
-  // console.log(session);
+  // console.log("---->",providers);
+  // console.log("******",session);
 
   useEffect(() => {
     const setProvider = async () => {
       try {
         const res = await getProviders();
-        // console.log(res);
+        // console.log("[[[[",res);
         if (res) {
           setProviders(res);
         } else {
@@ -108,7 +108,7 @@ const Nav = () => {
         {session?.user ? (
           <div>
             <Image
-              src={"/assets/images/logo.svg"}
+              src={session.user.image}
               alt="profile"
               width={37}
               height={37}

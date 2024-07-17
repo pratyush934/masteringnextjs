@@ -24,16 +24,9 @@ const CreatePrompt = () => {
     //todo
     e.preventDefault();
     setSubmitting(true);
-    /* 
-        1. fetch(/api/prompt/new, {
-            method: post,
-            body: json.stringify({
-            data -> prompt, userId, tag
-            })
-        })
-        2. if(responsk.ok) => router -> /
-        3. setSubmitting false
-    */
+
+    console.log("--------> ", post.prompt);
+
     try {
       const response = await fetch("/api/prompt/new", {
         method: "POST",
@@ -54,11 +47,12 @@ const CreatePrompt = () => {
     }
   };
 
+
   return (
     <div>
       <Form
         type="Create"
-        post={"post"}
+        post={post}
         setPost={setPost}
         submitting={submitting}
         handleSubmit={CreatePrompt}

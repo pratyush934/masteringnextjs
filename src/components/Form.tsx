@@ -31,7 +31,7 @@ const Form = ({
             <span className="font-satoshi font-semibold text-base text-gray-700">
               Your AI prompt
             </span>
-
+            {/* {e.target.value} */}
             <textarea
               value={post.prompt}
               onChange={(e) => setPost({ ...post, prompt: e.target.value })}

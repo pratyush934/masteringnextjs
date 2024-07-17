@@ -4,6 +4,7 @@ export interface User extends Document {
   email: string;
   username: string;
   image: string;
+  id: string
 }
 
 export const userSchema: Schema<User> = new Schema({
