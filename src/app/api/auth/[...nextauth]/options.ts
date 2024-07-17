@@ -22,6 +22,7 @@ export const authOptions: NextAuthOptions = {
       session: any;
     }): Promise<Partial<EndSessionOptions>> {
       // Implementation goes here. For now, returning an empty object.
+      await dbConnect();
       const sessionUser: any = await userModel.findOne({
         email: session?.user.email,
       });
