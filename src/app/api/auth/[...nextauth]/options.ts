@@ -1,9 +1,6 @@
-import { userModel } from "@/models/user.model";
+import { User, userModel } from "@/models/user.model";
 import { dbConnect } from "@/utils/db";
-import { SessionOptions } from "http2";
-import { EndSessionOptions } from "mongodb";
-import { NextAuthOptions, User } from "next-auth";
-import NextAuth from "next-auth/next";
+import { NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 
@@ -20,7 +17,7 @@ export const authOptions: NextAuthOptions = {
       session,
     }: {
       session: any;
-    }): Promise<Partial<EndSessionOptions>> {
+    }):  Promise<Session> {
       // Implementation goes here. For now, returning an empty object.
       await dbConnect();
       const sessionUser: any = await userModel.findOne({
@@ -31,7 +28,12 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
 
-    async signIn({ profile }: { profile: any }) {
+    async signIn(params: {
+      profile?: any;
+      email?: { verificationRequest?: boolean } | undefined;
+      credentials?: Record<string, any> | undefined;
+    }): Promise<boolean> {
+      const { profile } = params;
       try {
         await dbConnect();
         const userExists = await userModel.findOne({ email: profile?.email });
