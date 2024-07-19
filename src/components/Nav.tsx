@@ -108,7 +108,7 @@ const Nav = () => {
         {session?.user ? (
           <div>
             <Image
-              src={session.user.image}
+              src={session?.user?.image ?? ""}
               alt="profile"
               width={37}
               height={37}
