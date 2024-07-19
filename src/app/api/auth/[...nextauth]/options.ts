@@ -3,7 +3,6 @@ import { dbConnect } from "@/utils/db";
 import { NextAuthOptions, Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -15,16 +14,25 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async session({
       session,
+      token,
+      user,
     }: {
-      session: any;
-    }):  Promise<Session> {
-      // Implementation goes here. For now, returning an empty object.
+      session: Session;
+      token: any;
+      user: any;
+    }): Promise<Session> {
       await dbConnect();
-      const sessionUser: any = await userModel.findOne({
-        email: session?.user.email,
-      });
-      session.user.id = sessionUser?._id.toString();
-      // console.log(session.user);
+
+      if (session.user && session.user.email) {
+        const sessionUser = await userModel.findOne({
+          email: session.user.email,
+        });
+
+        if (sessionUser && sessionUser._id) {
+          session.user.id = sessionUser._id.toString();
+        }
+      }
+
       return session;
     },
 
