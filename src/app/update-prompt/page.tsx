@@ -3,7 +3,7 @@
 import Form from "@/components/Form";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 interface Post {
   prompt: string;
@@ -77,4 +77,12 @@ const UpdatePrompt = () => {
   );
 };
 
-export default UpdatePrompt;
+const Page = () => {
+    return (
+        <Suspense>
+            <UpdatePrompt />
+        </Suspense>
+    )
+}
+
+export default Page;
