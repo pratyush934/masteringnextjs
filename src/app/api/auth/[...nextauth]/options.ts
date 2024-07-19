@@ -4,6 +4,8 @@ import { NextAuthOptions, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 
+
+
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
@@ -27,9 +29,13 @@ export const authOptions: NextAuthOptions = {
           email: session.user.email,
         });
 
+        // console.log(session.user);
+        
         if (sessionUser && sessionUser._id) {
           session.user.id = sessionUser._id.toString();
         }
+        
+        // console.log(session.user);
       }
 
       return session;
