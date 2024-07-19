@@ -1,6 +1,7 @@
 import { User, userModel } from "@/models/user.model";
 import { dbConnect } from "@/utils/db";
 import { NextAuthOptions, Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
@@ -15,11 +16,9 @@ export const authOptions: NextAuthOptions = {
     async session({
       session,
       token,
-      user,
     }: {
       session: Session;
-      token: any;
-      user: any;
+      token: JWT;
     }): Promise<Session> {
       await dbConnect();
 
