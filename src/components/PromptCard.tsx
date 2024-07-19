@@ -19,7 +19,7 @@ const PromptCard = ({
   const [copied, setCopied] = useState<string>("");
   const router = useRouter();
 
-  console.log('asdfasdfsad-----',post.creator._id);
+//   console.log('asdfasdfsad-----',post.creator._id);
 // console.log(post);
 
   const handleCopy = () => {

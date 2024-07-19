@@ -59,7 +59,7 @@ export async function DELETE(
     await dbConnect();
 
     const response = await promptModel.findByIdAndDelete(params.id);
-    console.log("----><----", response);
+    // console.log("----><----", response);
     return new Response("Deleted Successfully", { status: 200 });
   } catch (error) {
     console.log(`Error exist in DELETE route`, error);

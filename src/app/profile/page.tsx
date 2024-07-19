@@ -9,7 +9,7 @@ const Profile = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  const [myPosts, setMyPost] = useState([]);
+  const [myPosts, setMyPost] = useState<{ _id: string }[]>([]);
 
   const handleEdit = (post: any) => {
     router.push(`/update-prompt?id=${post?._id}`);
@@ -20,11 +20,16 @@ const Profile = () => {
 
     if (hasConfirmed) {
       try {
-        await fetch(`/api/prompt/${post?._id.toString()}`, {
-          method: "DELETE",
+          
+          await fetch(`/api/prompt/${post?._id.toString()}`, {
+              method: "DELETE",
+            });
+            
+        const filter = myPosts.filter((item) => {
+            const filter = myPosts.filter((item) => item?._id !== post?._id);
         });
+        console.log(myPosts);
 
-        const filter = myPosts.filter((item) => item?._id !== post?._id);
         setMyPost(filter);
       } catch (error) {
         console.log(`Error exist in delete`);
@@ -36,7 +41,7 @@ const Profile = () => {
     const fetchPost = async () => {
       try {
         const response = await fetch(`/api/users/${session?.user?.id}/posts`);
-        console.log(response);
+        // console.log(response);
         const data = await response.json();
         setMyPost(data);
       } catch (error) {}
