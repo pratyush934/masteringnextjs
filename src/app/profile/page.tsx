@@ -1,5 +1,4 @@
 "use client";
-
 import ProfileComponent from "@/components/Profile";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
